@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// App.tsx
+import React, { useState } from 'react';
+import TaskList from './TaskList';
+import TaskForm from './TaskForm';
+import { Task } from './types';
+import * as Styled from './styles';
 
-function App() {
+
+const App: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const handleTaskComplete = (id: number) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task))
+    );
+  };
+
+  const handleDeleteTask = (id: number) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  };
+
+  const handleAddTask = (newTask: Task) => {
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  };
+
+  const handleEditTask = (id: number, updatedTask: Task) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === id ? { ...task, ...updatedTask } : task))
+    );
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Styled.Container>
+      <Styled.Title>Task Manager</Styled.Title>
+      <TaskForm onAddTask={handleAddTask} />
+      <TaskList
+        tasks={tasks}
+        onTaskComplete={handleTaskComplete}
+        onDeleteTask={handleDeleteTask}
+        onEditTask={handleEditTask}
+      />
+    </Styled.Container>
   );
-}
+};
 
 export default App;
