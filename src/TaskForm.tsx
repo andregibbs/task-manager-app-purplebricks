@@ -34,7 +34,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
   };
 
   return (
-    <Styled.Form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Styled.FormGroup>
         <Styled.Label>
           Title:
@@ -58,7 +58,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
       <Styled.Button type="submit">
         Add Task
       </Styled.Button>
-    </Styled.Form>
+    </form>
   );
 };
 

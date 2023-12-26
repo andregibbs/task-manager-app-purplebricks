@@ -28,13 +28,18 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskComplete, onDeleteTask,
   return (
     <Styled.ListItem>
       {!isEditing ? (
-        <> 
+        <>
           <Styled.InputCheckbox
             type="checkbox"
             checked={task.completed}
             onChange={() => onTaskComplete(task.id)}
           />
-            <span>{task.title}</span> - <span>{task.description}</span>
+          {/* <span>{task.title}</span> - <span>{task.description}</span> */}
+
+          <Styled.TaskContainer>
+            <Styled.TaskTitle>{task.title}</Styled.TaskTitle>
+            <Styled.TaskDescription>{task.description}</Styled.TaskDescription>
+          </Styled.TaskContainer>
           <Styled.ButtonContainer>
             <Styled.Button onClick={() => setIsEditing(true)}>Edit</Styled.Button>
             <Styled.Button onClick={() => onDeleteTask(task.id)}>Delete</Styled.Button>
@@ -43,26 +48,27 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskComplete, onDeleteTask,
         </>
       ) : (
         <>
-          <Styled.Label>
-            Title:
-            <Styled.Input
-              type="text"
-              value={editedTitle}
-              onChange={(e) => setEditedTitle(e.target.value)}
-            />
-          </Styled.Label>
-          <Styled.Label>
-            Description:
-            <Styled.TextArea
-              value={editedDescription}
-              onChange={(e) => setEditedDescription(e.target.value)}
-            />
-          </Styled.Label>
-          <Styled.ButtonContainer>
-          <Styled.Button onClick={handleSaveEdit}>Save</Styled.Button>
-          <Styled.Button onClick={() => setIsEditing(false)}>Cancel</Styled.Button>
-          </Styled.ButtonContainer>
-
+          <Styled.ListItemEdit>
+            <Styled.Label>
+              Title:
+              <Styled.Input
+                type="text"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+              />
+            </Styled.Label>
+            <Styled.Label>
+              Description:
+              <Styled.TextArea
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)}
+              />
+            </Styled.Label>
+            <Styled.ButtonContainer>
+              <Styled.Button onClick={handleSaveEdit}>Save</Styled.Button>
+              <Styled.Button onClick={() => setIsEditing(false)}>Cancel</Styled.Button>
+            </Styled.ButtonContainer>
+          </Styled.ListItemEdit>
         </>
       )}
     </Styled.ListItem>
